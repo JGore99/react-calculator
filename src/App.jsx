@@ -8,20 +8,42 @@ function App() {
   const [buttonValue, setButtonValue] = useState()
   const [previousValue, setPreviousValue] = useState(null)
   const [currentValue, setCurrentValue] = useState('0')
-  
+  const [hasDecimal, setHasDecimal] = useState(false)
+  let tempCurrentTotal = '0'
 
   const handleClick = (keyValue) => {
     setButtonValue(keyValue)
     updateCurrentValue(currentValue, keyValue)
-    console.log(keyValue)
   }
 
   const handleDoubleClick = () => {
-    console.log("2 Clicks")
+    clearALL()
   }
 
   const updateCurrentValue = (currentValue, keyValue) => {
-    currentValue === '0' ? setCurrentValue(keyValue) : setCurrentValue(currentValue + keyValue)
+    if(currentValue === '0'  && keyValue !== '.'){
+      tempCurrentTotal = keyValue
+      console.log(tempCurrentTotal, "temp current value")
+    } else if (keyValue === '.' && /\./.test(currentValue)){
+      return
+    } else if (currentValue === '0'  && keyValue === '.'){
+      tempCurrentTotal = currentValue + keyValue
+      console.log(tempCurrentTotal, "temp current value")
+    } else {
+      tempCurrentTotal = currentValue + keyValue
+      console.log(tempCurrentTotal, "temp current value")
+    }
+    setCurrentValue(tempCurrentTotal)
+    console.log(currentValue, "current value")
+    console.log(tempCurrentTotal, "temp current value")
+  }
+
+  const clearALL = () => {
+    tempCurrentTotal = '0'
+    setPreviousValue(null)
+    setCurrentValue(tempCurrentTotal)
+    console.log(previousValue, "previous value")
+    console.log(currentValue, "current value")
   }
 
   return (

@@ -6,7 +6,6 @@ const Keypad = (props) => {
 
   const handleClick = (keyValue) => {
     props.handleClick(keyValue)
-    console.log("2", keyValue)
   }
 
   const handleDoubleClick = () => {
