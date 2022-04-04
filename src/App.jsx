@@ -13,25 +13,34 @@ function App() {
 
   const handleClick = (keyValue) => {
     setButtonValue(keyValue)
-    updateCurrentValue(currentValue, keyValue)
+    updateCurrentValue(keyValue)
   }
 
-  const handleDoubleClick = () => {
-    clearALL()
+  const handleDoubleClick = (keyValue) => {
+    // double clicking C/CE Clears ALL
+    if (keyValue === 'C/CE') {
+      clearALL()
+    } else {
+      return
+    }
   }
 
-  const updateCurrentValue = (currentValue, keyValue) => {
-    if(currentValue === '0'  && keyValue !== '.'){
+  const updateCurrentValue = (keyValue) => {
+    if (keyValue === 'C/CE'){
+      // single clicking C/CE clears current value
+      tempCurrentTotal = '0'
+    } else if(currentValue === '0'  && keyValue !== '.'){
+      // overwrite zero
       tempCurrentTotal = keyValue
       console.log(tempCurrentTotal, "temp current value")
     } else if (keyValue === '.' && /\./.test(currentValue)){
+      // if decimal present, do nothing
       return
-    } else if (currentValue === '0'  && keyValue === '.'){
-      tempCurrentTotal = currentValue + keyValue
-      console.log(tempCurrentTotal, "temp current value")
+    } else if (keyValue === 'DEL'){
+      // DEL works as backspace
+      tempCurrentTotal = currentValue.slice(0, -1)
     } else {
       tempCurrentTotal = currentValue + keyValue
-      console.log(tempCurrentTotal, "temp current value")
     }
     setCurrentValue(tempCurrentTotal)
     console.log(currentValue, "current value")
